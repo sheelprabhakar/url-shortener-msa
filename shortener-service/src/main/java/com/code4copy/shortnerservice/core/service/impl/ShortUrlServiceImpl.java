@@ -1,7 +1,7 @@
-package com.code4copy.shortnerservice.service.impl;
+package com.code4copy.shortnerservice.core.service.impl;
 
-import com.code4copy.shortnerservice.repository.ShortUrlRepository;
-import com.code4copy.shortnerservice.service.ShortUrlService;
+import com.code4copy.shortnerservice.core.dao.ShortUrlRepository;
+import com.code4copy.shortnerservice.core.service.ShortUrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +13,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
             + "abcdefghijklmnopqrstuvwxyz").toCharArray();
     private static final long BASE = DIGITS.length;
     private static final long MAX_NUMBER = BASE * BASE * BASE * BASE * BASE * BASE * BASE ;
+
     @Autowired
     public ShortUrlServiceImpl(final ShortUrlRepository shortUrlRepository){
         this.shortUrlRepository = shortUrlRepository;

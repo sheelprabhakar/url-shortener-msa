@@ -1,13 +1,11 @@
-package com.code4copy.shortnerservice;
+package com.code4copy.tokenservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ShortnerServiceApplication {
-
+public class TokenServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ShortnerServiceApplication.class, args);
+        SpringApplication.run(TokenServiceApplication.class, args);
     }
-
 }

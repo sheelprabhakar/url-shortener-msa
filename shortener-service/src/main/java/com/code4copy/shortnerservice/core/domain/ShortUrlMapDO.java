@@ -1,4 +1,4 @@
-package com.code4copy.shortnerservice.model;
+package com.code4copy.shortnerservice.core.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.Calendar;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShortUrlMap {
+public class ShortUrlMapDO {
     @PrimaryKey
     @Column(value = "short_url")
     private String shortUrl;
