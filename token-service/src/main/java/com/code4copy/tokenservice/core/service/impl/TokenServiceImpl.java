@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class TokenServiceImpl implements TokenService {
     private final TokenLogRepository tokenLogRepository;
     @Value( "${token.size:1000}" )
-    private long tokeSize=1000;
+    private long tokenSize =1000;
     @Autowired
     public TokenServiceImpl(final TokenLogRepository tokenLogRepository){
         this.tokenLogRepository = tokenLogRepository;
@@ -26,7 +24,7 @@ public class TokenServiceImpl implements TokenService {
         synchronized(this){
             long max = this.tokenLogRepository.maxToNumber();
             long from = max+1;
-            long to = from+tokeSize;
+            long to = from+ tokenSize;
             TokenLogDO tokenLogDO =  new TokenLogDO();
             tokenLogDO.setRange(from, to);
             tokenLogDO.setCreatedBy("");
