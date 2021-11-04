@@ -1,6 +1,5 @@
 package com.code4copy.shortnerservice.core.service.impl;
 
-
 import com.code4copy.shortnerservice.core.dao.ShortUrlRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

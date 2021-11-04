@@ -13,7 +13,7 @@ import java.util.Calendar;
 public class TokenServiceImpl implements TokenService {
     private final TokenLogRepository tokenLogRepository;
     @Value( "${token.size:1000}" )
-    private long tokenSize =1000;
+    private final long tokenSize =1000;
     @Autowired
     public TokenServiceImpl(final TokenLogRepository tokenLogRepository){
         this.tokenLogRepository = tokenLogRepository;

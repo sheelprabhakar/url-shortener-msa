@@ -13,7 +13,7 @@ import java.util.Calendar;
 @Table(value = "short_url_map")
 @Getter
 @Setter
-@AllArgsConstructor
+
 @NoArgsConstructor
 public class ShortUrlMapDO {
     @PrimaryKey

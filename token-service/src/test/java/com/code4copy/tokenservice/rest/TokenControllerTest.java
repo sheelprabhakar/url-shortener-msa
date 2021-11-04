@@ -6,13 +6,12 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DirtiesContext
 public class TokenControllerTest extends AbstractIntegrationTest{
-    private final String BASE_URL="/api/v1/";
+    private final String BASE_URL="/tokenservice/api/v1/";
     @Test
     public void test_get_token_ok() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders

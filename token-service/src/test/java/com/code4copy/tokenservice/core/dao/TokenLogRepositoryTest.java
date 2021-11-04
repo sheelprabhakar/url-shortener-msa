@@ -78,7 +78,7 @@ public class TokenLogRepositoryTest {
         assertEquals(logDO1.getCreatedBy(),logDO.getCreatedBy());
 
         TokenLogDO byId = this.tokenLogRepository.findById(logDO1.getId()).get();
-        assertNotEquals(byId.getCreateAt(), logDO1.getCreateAt());
+        assertEquals(byId.getCreateAt(), logDO1.getCreateAt());
     }
 
     @Test

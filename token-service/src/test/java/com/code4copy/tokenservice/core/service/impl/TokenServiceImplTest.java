@@ -30,7 +30,7 @@ public class TokenServiceImplTest {
         tokenLogDO.setCreateAt(Calendar.getInstance());
         tokenLogDO.setId(1);
         Mockito.when(tokenLogRepository.maxToNumber()).thenReturn(0l);
-        Mockito.when(tokenLogRepository.save(ArgumentMatchers.<TokenLogDO>any()))
+        Mockito.when(tokenLogRepository.save(ArgumentMatchers.any()))
                 .thenReturn(tokenLogDO);
 
     }
