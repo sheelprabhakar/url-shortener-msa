@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.concurrent.*;
 
@@ -31,6 +32,8 @@ public class ShortUrlServiceImpl implements ShortUrlService {
 
     @Value("${token-service.endpoint}")
     private String tokenServiceEndPoint;
+    @Value("${short-url.base}")
+    private String baseUrl;
     private final RestTemplate restTemplate;
     private final RetryTemplate retryTemplate;
     private boolean fetchingTokenInProgress;
@@ -50,6 +53,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
         this.updateTokenQueue();
     }
 
+    @Override
     public String generateShortUrl(String longUrl) throws ShorteningException {
         CompletableFuture<Void> completableFuture = null;
         if(this.tokenQueue.size() < 200 && !this.fetchingTokenInProgress){
@@ -76,9 +80,9 @@ public class ShortUrlServiceImpl implements ShortUrlService {
             ShortUrlMapDO urlMapDO = new ShortUrlMapDO();
             urlMapDO.setUrl(longUrl);
             urlMapDO.setShortUrl(shortUrl);
-            urlMapDO.setCreatedOn(Calendar.getInstance());
+            urlMapDO.setCreatedOn(LocalDate.now());
             this.shortUrlRepository.save(urlMapDO);
-            return shortUrl;
+            return baseUrl+shortUrl;
         }
     }
     private static String generateCode(long num) {
@@ -95,20 +99,24 @@ public class ShortUrlServiceImpl implements ShortUrlService {
     }
     private void updateTokenQueue(){
         this.fetchingTokenInProgress = true;
-        this.retryTemplate.execute(arg0 -> {
-            TokenRange tokenRange = this.restTemplate.getForEntity(this.tokenServiceEndPoint, TokenRange.class).getBody();
-            for(long i = tokenRange.fromNumber; i <= tokenRange.toNumber; ++i){
-                this.tokenQueue.add(i);
-            }
-            return null;
-        });
+        try {
+            this.retryTemplate.execute(arg0 -> {
+                TokenRange tokenRange = this.restTemplate.getForEntity(this.tokenServiceEndPoint, TokenRange.class).getBody();
+                for (long i = tokenRange.fromNumber; i <= tokenRange.toNumber; ++i) {
+                    this.tokenQueue.add(i);
+                }
+                return null;
+            });
+        }catch (RuntimeException e){
+            logger.error(e.getMessage());
+        }
         this.fetchingTokenInProgress = false;
     }
 
     @Getter
     @Setter
     @NoArgsConstructor
-    public class TokenRange {
+    public static class TokenRange {
         private long fromNumber;
         private long toNumber;
     }

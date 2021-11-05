@@ -3,10 +3,7 @@ package com.code4copy.tokenservice.core.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Calendar;
 
 @Table(name = "token_log")
@@ -15,6 +12,7 @@ import java.util.Calendar;
 @Setter
 public class TokenLogDO {
     @Id
+    @GeneratedValue(strategy=GenerationType.TABLE)
     private int id;
     @Column(nullable = false, updatable = false, unique = true)
     private long fromNumber;

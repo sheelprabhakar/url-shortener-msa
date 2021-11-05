@@ -24,7 +24,7 @@ public class TokenServiceImpl implements TokenService {
         synchronized(this){
             long max = this.tokenLogRepository.maxToNumber();
             long from = max+1;
-            long to = from+ tokenSize;
+            long to = from+ tokenSize-1;
             TokenLogDO tokenLogDO =  new TokenLogDO();
             tokenLogDO.setRange(from, to);
             tokenLogDO.setCreatedBy("");
