@@ -21,4 +21,6 @@ public class TokenControllerTest extends AbstractIntegrationTest{
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.fromNumber").isNumber());
     }
+
+
 }

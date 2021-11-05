@@ -19,7 +19,7 @@ public class ShortUrlController {
         this.restAdapterV1 = restAdapterV1;
     }
 
-    @GetMapping(produces = "application/text")
+    @GetMapping(produces = "text/html")
     public ResponseEntity<String> getShortUrl(@RequestParam("url") String url){
         if(!StringUtils.hasLength(url)){
             return ResponseEntity.badRequest().body("Not valid url string");
