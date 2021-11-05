@@ -102,6 +102,9 @@ public class ShortUrlServiceImpl implements ShortUrlService {
         try {
             this.retryTemplate.execute(arg0 -> {
                 TokenRange tokenRange = this.restTemplate.getForEntity(this.tokenServiceEndPoint, TokenRange.class).getBody();
+                if(tokenRange == null){
+                    throw new ShorteningException("Token range is null");
+                }
                 for (long i = tokenRange.fromNumber; i <= tokenRange.toNumber; ++i) {
                     this.tokenQueue.add(i);
                 }
