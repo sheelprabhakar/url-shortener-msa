@@ -1,7 +1,7 @@
-package com.code4copy.shortnerservice.core.dao;
+package com.code4copy.redirectservice.core.dao;
 
 
-import com.code4copy.shortnerservice.core.domain.ShortUrlMapDO;
+import com.code4copy.redirectservice.core.domain.ShortUrlMapDO;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;
 

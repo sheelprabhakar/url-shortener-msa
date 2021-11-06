@@ -1,6 +1,6 @@
-package com.code4copy.shortnerservice.rest;
+package com.code4copy.redirectservice.rest;
 
-import com.code4copy.shortnerservice.ShortenerServiceApplication;
+import com.code4copy.redirectservice.RedirectServiceApplication;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import org.junit.jupiter.api.AfterAll;
@@ -23,7 +23,7 @@ import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
-@SpringBootTest(classes = ShortenerServiceApplication.class,
+@SpringBootTest(classes = RedirectServiceApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Testcontainers
