@@ -1,18 +1,14 @@
-package com.code4copy.shortnerservice.core.domain;
+package com.code4copy.redirectservice.core.domain;
 
-import com.datastax.oss.driver.api.core.type.DataType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 @Table(value = "short_url_map")
 @Getter
@@ -22,7 +18,6 @@ import java.util.Calendar;
 public class ShortUrlMapDO {
     @PrimaryKey
     @Column(value = "short_url")
-    @Id
     private String shortUrl;
 
     @Column(value = "url")

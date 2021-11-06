@@ -5,9 +5,8 @@ plugins {
     id "com.github.spotbugs" version "4.7.3"
 }
 
-group = 'com.code4copy'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+group 'com.code4copy.redirect'
+version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -38,6 +37,10 @@ dependencies {
 
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 jar {
