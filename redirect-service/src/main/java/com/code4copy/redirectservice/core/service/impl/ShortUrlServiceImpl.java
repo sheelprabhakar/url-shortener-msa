@@ -14,16 +14,12 @@ import java.util.Optional;
 @Service
 public class ShortUrlServiceImpl implements ShortUrlService {
     private final ShortUrlRepository shortUrlRepository;
-    private final RetryTemplate retryTemplate;
-
-    private final StringRedisTemplate redisTemplate;
+       private final StringRedisTemplate redisTemplate;
 
     @Autowired
     public ShortUrlServiceImpl(final ShortUrlRepository shortUrlRepository,
-                               final RetryTemplate retryTemplate,
                                final StringRedisTemplate redisTemplate){
         this.shortUrlRepository = shortUrlRepository;
-        this.retryTemplate = retryTemplate;
         this.redisTemplate = redisTemplate;
     }
 
