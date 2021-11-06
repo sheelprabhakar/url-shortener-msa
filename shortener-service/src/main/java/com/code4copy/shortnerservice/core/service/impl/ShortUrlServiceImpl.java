@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -34,18 +35,23 @@ public class ShortUrlServiceImpl implements ShortUrlService {
     private String tokenServiceEndPoint;
     @Value("${short-url.base}")
     private String baseUrl;
+
     private final RestTemplate restTemplate;
     private final RetryTemplate retryTemplate;
     private boolean fetchingTokenInProgress;
     private final ConcurrentLinkedQueue<Long> tokenQueue;
+    private final StringRedisTemplate redisTemplate;
+
     @Autowired
     public ShortUrlServiceImpl(final ShortUrlRepository shortUrlRepository,
                                final RestTemplate restTemplate,
-                               final RetryTemplate retryTemplate){
+                               final RetryTemplate retryTemplate,
+                               final StringRedisTemplate redisTemplate){
         this.shortUrlRepository = shortUrlRepository;
         this.restTemplate = restTemplate;
         this.tokenQueue = new ConcurrentLinkedQueue<>();
         this.retryTemplate = retryTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
     @PostConstruct
@@ -82,6 +88,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
             urlMapDO.setShortUrl(shortUrl);
             urlMapDO.setCreatedOn(LocalDate.now());
             this.shortUrlRepository.save(urlMapDO);
+            this.redisTemplate.opsForHash().put("shortUrl", shortUrl, longUrl);
             return baseUrl+shortUrl;
         }
     }

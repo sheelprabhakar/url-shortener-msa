@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.CassandraContainer;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -34,6 +35,10 @@ public abstract class AbstractIntegrationTest {
     public static final CassandraContainer cassandra
             = (CassandraContainer) new CassandraContainer("cassandra:3.11.2").withExposedPorts(9042);
 
+    @Container
+    public static final GenericContainer redis
+            = (GenericContainer) new GenericContainer("redis:3.0.6").withExposedPorts(6379);
+
     static ClientAndServer mockServer;
     @BeforeAll
     static void setupCassandraConnectionProperties() {
@@ -47,6 +52,13 @@ public abstract class AbstractIntegrationTest {
 
         mockServer = startClientAndServer(8089);
         createExpectationForGetToken();
+
+        System.setProperty("spring.redis.database", "0");
+        System.setProperty("spring.redis.host", redis.getContainerIpAddress());
+        System.setProperty("spring.redis.port", String.valueOf(redis.getMappedPort(6379)));
+        System.setProperty("spring.redis.timeout", "60000");
+
+        redis.start();
     }
 
     private static void createExpectationForGetToken() {
@@ -68,6 +80,7 @@ public abstract class AbstractIntegrationTest {
     @AfterAll
     public static void stopServer() {
         mockServer.stop();
+        redis.start();
     }
     static void createKeyspace(Cluster cluster) {
         try(Session session = cluster.connect()) {
