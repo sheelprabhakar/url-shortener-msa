@@ -25,7 +25,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
 
     @Override
     public String getLongUrl(String shortUrl){
-        Object data =  this.redisTemplate.opsForHash().entries("shortUrl").get("key1");//.get(Constants.CACHE_KEY, shortUrl);
+        Object data =  this.redisTemplate.opsForHash().entries(Constants.CACHE_KEY).get(shortUrl);//.get(Constants.CACHE_KEY, shortUrl);
         if(data == null){
             Optional<ShortUrlMapDO> byId = this.shortUrlRepository.findById(shortUrl);
             if(byId.isPresent()){
