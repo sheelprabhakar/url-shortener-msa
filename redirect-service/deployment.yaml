@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redirect-deployment
+spec:
+  selector:
+    matchLabels:
+      app: redirect-service
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: redirect-service
+    spec:
+      containers:
+      - name: redirect
+        image: sheelprabhakar/redirect-service:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redirect-service
+spec:
+  selector:
+    app: redirect-service
+  ports:
+    - protocol: TCP
+      port: 80
