@@ -21,11 +21,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redirect-service
+  name: token-service
 spec:
   type: NodePort
   selector:
-    app: redirect-service
+    app: token-service
   ports:
     - protocol: TCP
       port: 8092
