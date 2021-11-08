@@ -120,3 +120,5 @@ gradle-app.setting
 /token-service/build/classes/java/main/com/code4copy/tokenservice/TokenServiceApplication.class
 /token-service/build/classes/java/main/com/code4copy/tokenservice/core/service/impl/TokenServiceImpl.class
 /token-service/build/classes/java/test/com/code4copy/tokenservice/core/service/impl/TokenServiceImplTest.class
+/k8s-vagrant/ubuntu-bionic-18.04-cloudimg-console.log
+/k8s-vagrant/.vagrant/
