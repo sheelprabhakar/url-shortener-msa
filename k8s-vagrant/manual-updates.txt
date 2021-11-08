@@ -1,0 +1,30 @@
+vagrant ssh k8s-master
+
+root@master:~# sudo kubeadm init --apiserver-advertise-address 192.168.33.13 --pod-network-cidr=10.244.0.0/16
+
+ $ mkdir -p $HOME/.kube
+ $ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+ $ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+kubectl get nodes
+
+ flannel net plugin for the cluster network.
+$ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+kubectl get cs
+
+$ sudo nano /etc/kubernetes/manifests/kube-scheduler.yaml
+Clear the line (spec->containers->command) containing this phrase:  -- port=0
+$ sudo nano /etc/kubernetes/manifests/kube-controller-manager.yaml
+Clear the line (spec->containers->command) containing this phrase: --- port=0
+$ sudo systemctl restart kubelet.service
+
+kubeadm token create --print-join-command
+
+
+step 1. vagrant ssh k8s-worker-1
+step 2. run the command below as root
+ kubeadm join 192.168.33.13:6443 --token bx86lo.agyszwr53ow5y53u \
+    --discovery-token-ca-cert-hash sha256:536b10417f411de9ff9f11cb83d286f9217f5031845df93355b3a6a5ed96c066
+
+

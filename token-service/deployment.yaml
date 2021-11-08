@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: token-deployment
+spec:
+  selector:
+    matchLabels:
+      app: token-service
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: token-service
+    spec:
+      containers:
+      - name: token
+        image: sheelprabhakar/token-service:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redirect-service
+spec:
+  type: NodePort
+  selector:
+    app: redirect-service
+  ports:
+    - protocol: TCP
+      port: 8092
+      targetPort: 80
+      nodePort: 30037
