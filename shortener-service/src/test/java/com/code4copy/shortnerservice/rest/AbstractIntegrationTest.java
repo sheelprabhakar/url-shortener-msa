@@ -59,7 +59,9 @@ public abstract class AbstractIntegrationTest {
         System.setProperty("spring.redis.timeout", "60000");
 
         redis.start();
+
     }
+
 
     private static void createExpectationForGetToken() {
         new MockServerClient("localhost", 8089)

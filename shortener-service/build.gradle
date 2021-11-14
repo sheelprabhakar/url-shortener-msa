@@ -20,6 +20,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+
     implementation 'org.springframework:spring-aspects:5.3.12'
     implementation 'org.springframework.retry:spring-retry:1.3.1'
 
@@ -35,6 +36,7 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter:1.16.2'
     testImplementation 'org.mock-server:mockserver-netty:5.11.2'
     testImplementation 'org.mock-server:mockserver-client-java:5.11.2'
+
 
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'

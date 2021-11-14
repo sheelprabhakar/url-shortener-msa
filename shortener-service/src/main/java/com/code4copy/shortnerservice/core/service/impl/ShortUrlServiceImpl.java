@@ -4,9 +4,7 @@ import com.code4copy.shortnerservice.common.exception.ShorteningException;
 import com.code4copy.shortnerservice.core.dao.ShortUrlRepository;
 import com.code4copy.shortnerservice.core.domain.ShortUrlMapDO;
 import com.code4copy.shortnerservice.core.service.ShortUrlService;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.code4copy.shortnerservice.core.service.TokenRange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +16,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Optional;
 import java.util.concurrent.*;
 
 @Service
@@ -110,10 +106,11 @@ public class ShortUrlServiceImpl implements ShortUrlService {
         try {
             this.retryTemplate.execute(arg0 -> {
                 TokenRange tokenRange = this.restTemplate.getForEntity(this.tokenServiceEndPoint, TokenRange.class).getBody();
+
                 if(tokenRange == null){
                     throw new ShorteningException("Token range is null");
                 }
-                for (long i = tokenRange.fromNumber; i <= tokenRange.toNumber; ++i) {
+                for (long i = tokenRange.getFromNumber(); i <= tokenRange.getToNumber(); ++i) {
                     this.tokenQueue.add(i);
                 }
                 return null;
@@ -124,12 +121,6 @@ public class ShortUrlServiceImpl implements ShortUrlService {
         this.fetchingTokenInProgress = false;
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class TokenRange {
-        private long fromNumber;
-        private long toNumber;
-    }
+
 
 }
