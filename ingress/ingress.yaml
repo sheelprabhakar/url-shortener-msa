@@ -5,22 +5,33 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  backend:
-    serviceName: default-http-backend
-    servicePort: 80
+  defaultBackend:
+    service:
+      name: default-http-backend
+      port:
+        number: 80
   rules:
     - host: microservices.info
       http:
         paths:
           - path: /tokenservice
+            pathType: Prefix
             backend:
-              serviceName: token-service
-              servicePort: 8080
+              service:
+                name: token-service
+                port:
+                  number: 8080
           - path: /shortener
+            pathType: Prefix
             backend:
-              serviceName: shortener-service
-              servicePort: 8080
+              service:
+                name: shortener-service
+                port:
+                  number: 8080
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: redirect-service
-              servicePort: 8080
+              service:
+                name: redirect-service
+                port:
+                  number: 8080
