@@ -16,7 +16,7 @@ spec:
       - name: redirect
         image: sheelprabhakar/redirect-service:latest
         ports:
-        - containerPort: 80
+        - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -28,6 +28,6 @@ spec:
     app: redirect-service
   ports:
     - protocol: TCP
-      port: 8091
-      targetPort: 80
-      nodePort: 30036
+      port: 8080
+      targetPort: 8080
+      nodePort: 30039
