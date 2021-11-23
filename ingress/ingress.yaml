@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  defaultBackend:
+    service:
+      name: default-http-backend
+      port:
+        number: 80
+  rules:
+    - host: microservices.info
+      http:
+        paths:
+          - path: /tokenservice
+            pathType: Prefix
+            backend:
+              service:
+                name: token-service
+                port:
+                  number: 8080
+          - path: /shortener
+            pathType: Prefix
+            backend:
+              service:
+                name: shortener-service
+                port:
+                  number: 8080
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: redirect-service
+                port:
+                  number: 8080
