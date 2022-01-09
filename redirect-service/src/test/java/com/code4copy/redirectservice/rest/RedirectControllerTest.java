@@ -51,6 +51,7 @@ public class RedirectControllerTest extends  AbstractIntegrationTest{
         obj.setShortUrl("key2");
         obj.setUrl("https://wwww.google.com");
         this.shortUrlRepository.save(obj);
+        Thread.sleep(2000);
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/key2"))
                 .andDo(print())
