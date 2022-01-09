@@ -38,6 +38,7 @@ public class RedirectControllerTest extends  AbstractIntegrationTest{
     @Test
     public void test_get_redirect_from_cache_ok() throws Exception {
         this.redisTemplate.opsForHash().put(Constants.CACHE_KEY, "key1", "https://wwww.google.com");
+
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/key1"))
                 .andDo(print())
