@@ -104,6 +104,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
     private void updateTokenQueue(){
         this.fetchingTokenInProgress = true;
         try {
+            System.out.println("Token service endpoint: "+this.tokenServiceEndPoint);
             this.retryTemplate.execute(arg0 -> {
                 TokenRange tokenRange = this.restTemplate.getForEntity(this.tokenServiceEndPoint, TokenRange.class).getBody();
 

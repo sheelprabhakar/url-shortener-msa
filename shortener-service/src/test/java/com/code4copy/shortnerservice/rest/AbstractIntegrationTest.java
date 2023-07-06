@@ -11,6 +11,8 @@ import org.mockserver.model.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.CassandraContainer;
 import org.testcontainers.containers.GenericContainer;
@@ -40,23 +42,24 @@ public abstract class AbstractIntegrationTest {
             = (GenericContainer) new GenericContainer("redis:3.0.6").withExposedPorts(6379);
 
     static ClientAndServer mockServer;
-    @BeforeAll
-    static void setupCassandraConnectionProperties() {
-        System.setProperty("spring.data.cassandra.keyspace-name", "shorturldb");
-        System.setProperty("spring.data.cassandra.contact-points", cassandra.getContainerIpAddress());
-        System.setProperty("spring.data.cassandra.port", String.valueOf(cassandra.getMappedPort(9042)));
-        System.setProperty("spring.data.cassandra.local-datacenter", "datacenter1");
-        System.setProperty("spring.data.cassandra.schema-action", "create_if_not_exists");
+
+    @DynamicPropertySource
+    static void setupCassandraConnectionProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.cassandra.keyspace-name", "shorturldb"::toString);
+        registry.add("spring.data.cassandra.contact-points", cassandra::getContainerIpAddress);
+        registry.add("spring.data.cassandra.port", String.valueOf(cassandra.getMappedPort(9042))::toString);
+        registry.add("spring.data.cassandra.local-datacenter", "datacenter1"::toString);
+        registry.add("spring.data.cassandra.schema-action", "create_if_not_exists"::toString);
 
         createKeyspace(cassandra.getCluster());
 
         mockServer = startClientAndServer(8089);
         createExpectationForGetToken();
 
-        System.setProperty("spring.redis.database", "0");
-        System.setProperty("spring.redis.host", redis.getContainerIpAddress());
-        System.setProperty("spring.redis.port", String.valueOf(redis.getMappedPort(6379)));
-        System.setProperty("spring.redis.timeout", "60000");
+        registry.add("spring.redis.database", "0"::toString);
+        registry.add("spring.redis.host", redis::getContainerIpAddress);
+        registry.add("spring.redis.port", String.valueOf(redis.getMappedPort(6379))::toString);
+        registry.add("spring.redis.timeout", "60000"::toString);
 
         redis.start();
 
