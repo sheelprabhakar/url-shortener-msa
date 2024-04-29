@@ -123,3 +123,4 @@ gradle-app.setting
 /k8s-vagrant/ubuntu-bionic-18.04-cloudimg-console.log
 /k8s-vagrant/.vagrant/
 /redirect-service/build/
+/docker/.env
