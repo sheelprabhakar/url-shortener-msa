@@ -5,15 +5,12 @@ import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.redis.testcontainers.RedisStackContainer;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.cassandra.DataCassandraTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,17 +25,14 @@ import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
-@SpringBootTest(    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest( classes = RedirectServiceApplication.class,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 @AutoConfigureMockMvc
 public abstract class AbstractIntegrationTest {
     @Autowired
     MockMvc mockMvc;
-    // https://spring.io/blog/2023/06/23/improved-testcontainers-support-in-spring-boot-3-1
     @Container
-    @ServiceConnection
     public static final CassandraContainer cassandra
             = (CassandraContainer) new CassandraContainer("cassandra:latest").withExposedPorts(9042)
             .waitingFor(new CassandraQueryWaitStrategy());
@@ -67,6 +61,7 @@ public abstract class AbstractIntegrationTest {
         registry.add("spring.redis.host", redis::getHost);
         registry.add("spring.redis.port", redis::getFirstMappedPort);
         registry.add("spring.redis.timeout", "60000"::toString);
+        registry.add("spring.redis.password", "Password$4"::toString);
 
         redis.start();
         cassandra.start();

@@ -20,7 +20,7 @@ public abstract class AbstractIntegrationTest {
     MockMvc mockMvc;
 
     @Container
-    private static MySQLContainer database = new MySQLContainer("mysql");
+    private static final MySQLContainer database = new MySQLContainer("mysql");
 
     @DynamicPropertySource
     static void databaseProperties(DynamicPropertyRegistry registry) {

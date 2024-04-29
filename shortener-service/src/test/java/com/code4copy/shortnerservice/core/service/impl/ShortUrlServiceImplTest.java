@@ -25,16 +25,16 @@ public class ShortUrlServiceImplTest {
         generateCode = ReflectionTestUtils.invokeMethod(shortUrlService, "generateCode", 1L);
         assertEquals(generateCode, "1000000");
 
-        generateCode = ReflectionTestUtils.invokeMethod(shortUrlService, "generateCode", 999l);
+        generateCode = ReflectionTestUtils.invokeMethod(shortUrlService, "generateCode", 999L);
         assertEquals(generateCode, "7G00000");
 
-        generateCode = ReflectionTestUtils.invokeMethod(shortUrlService, "generateCode", 998009l);
+        generateCode = ReflectionTestUtils.invokeMethod(shortUrlService, "generateCode", 998009L);
         assertEquals(generateCode, "vcB4000");
         generateCode = ReflectionTestUtils.invokeMethod(shortUrlService, "generateCode", 3521614606207L);
         assertEquals(generateCode, "zzzzzzz");
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            ReflectionTestUtils.invokeMethod(shortUrlService, "generateCode", 0l);
+            ReflectionTestUtils.invokeMethod(shortUrlService, "generateCode", 0L);
         });
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
