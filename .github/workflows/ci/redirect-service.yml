@@ -1,0 +1,31 @@
+name: Build redirect-service
+
+on:
+  push:
+    branches: [ "main","dev" ]
+    paths: ['redirect-service/**']
+
+jobs:
+  build:
+
+    runs-on: [self-hosted, linux, x64]
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
+    # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
+    #- name: Make gradlew executable
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v3
+    - name: Change Path
+      run: cd redirect-service
+    - name: Setup Gradle exec
+      run: chmod +x gradlew
+    - name: Build with Gradle Wrapper
+      run:  ./gradlew build
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag sheelprabhakar/society-management:latest
