@@ -22,12 +22,12 @@ jobs:
         sparse-checkout-cone-mode: false
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v3
-    - name: List File
-      run: cd redirect-service
     - name: Setup Gradle exec
       run: chmod +x gradlew
+      working-directory: redirect-service
     - name: Build with Gradle Wrapper
       run:  ./gradlew build
+      working-directory: redirect-service
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag sheelprabhakar/redirect-service:latest
