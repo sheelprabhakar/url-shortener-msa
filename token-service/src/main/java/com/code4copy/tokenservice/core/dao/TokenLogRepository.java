@@ -1,10 +1,10 @@
 package com.code4copy.tokenservice.core.dao;
 
 import com.code4copy.tokenservice.core.domain.TokenLogDO;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import javax.transaction.Transactional;
 
 @Transactional
 public interface TokenLogRepository extends CrudRepository<TokenLogDO, Integer> {

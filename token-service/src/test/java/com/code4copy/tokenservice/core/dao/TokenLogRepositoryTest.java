@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class TokenLogRepositoryTest {
     @Container
-    private static MySQLContainer database = new MySQLContainer("mysql");
+    private static final MySQLContainer database = new MySQLContainer("mysql");
 
     @Autowired
     private TokenLogRepository tokenLogRepository;

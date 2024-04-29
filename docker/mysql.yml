@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=Password$4
+      - MYSQL_DATABASE=tokendb
+      - MYSQL_USER=c4c
+      - MYSQL_PASSWORD=Password$4
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - ${MYSQL_PORT:-3306}:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mysql_data:

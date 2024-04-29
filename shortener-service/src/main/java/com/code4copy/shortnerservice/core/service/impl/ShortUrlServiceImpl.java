@@ -5,22 +5,23 @@ import com.code4copy.shortnerservice.core.dao.ShortUrlRepository;
 import com.code4copy.shortnerservice.core.domain.ShortUrlMapDO;
 import com.code4copy.shortnerservice.core.service.ShortUrlService;
 import com.code4copy.shortnerservice.core.service.TokenRange;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.cassandra.core.CassandraAdminTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.concurrent.*;
 
 @Service
 public class ShortUrlServiceImpl implements ShortUrlService {
-    private static Logger logger = LoggerFactory.getLogger(ShortUrlServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ShortUrlServiceImpl.class);
     private final ShortUrlRepository shortUrlRepository;
     private static final char[] DIGITS = ("0123456789"
             + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -38,14 +39,16 @@ public class ShortUrlServiceImpl implements ShortUrlService {
     private boolean fetchingTokenInProgress;
     private final ConcurrentLinkedQueue<Long> tokenQueue;
     private final StringRedisTemplate redisTemplate;
+    private final CassandraAdminTemplate cassandraAdminTemplate;
 
     @Autowired
     public ShortUrlServiceImpl(final ShortUrlRepository shortUrlRepository,
                                final RestTemplate restTemplate,
                                final RetryTemplate retryTemplate,
-                               final StringRedisTemplate redisTemplate){
+                               final StringRedisTemplate redisTemplate, final CassandraAdminTemplate cassandraAdminTemplate){
         this.shortUrlRepository = shortUrlRepository;
         this.restTemplate = restTemplate;
+        this.cassandraAdminTemplate = cassandraAdminTemplate;
         this.tokenQueue = new ConcurrentLinkedQueue<>();
         this.retryTemplate = retryTemplate;
         this.redisTemplate = redisTemplate;
@@ -53,6 +56,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
 
     @PostConstruct
     private void init(){
+        this.cassandraAdminTemplate.createTable(true, ShortUrlMapDO.class);
         this.updateTokenQueue();
     }
 

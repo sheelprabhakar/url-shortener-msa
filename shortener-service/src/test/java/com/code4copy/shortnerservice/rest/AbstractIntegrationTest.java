@@ -3,6 +3,7 @@ package com.code4copy.shortnerservice.rest;
 import com.code4copy.shortnerservice.ShortenerServiceApplication;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
+import com.redis.testcontainers.RedisStackContainer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.mockserver.client.MockServerClient;
@@ -16,6 +17,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.CassandraContainer;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.wait.CassandraQueryWaitStrategy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -35,21 +37,22 @@ public abstract class AbstractIntegrationTest {
 
     @Container
     public static final CassandraContainer cassandra
-            = (CassandraContainer) new CassandraContainer("cassandra:3.11.2").withExposedPorts(9042);
+            = (CassandraContainer) new CassandraContainer("cassandra:latest").withExposedPorts(9042)
+            .waitingFor(new CassandraQueryWaitStrategy());
 
     @Container
-    public static final GenericContainer redis
-            = (GenericContainer) new GenericContainer("redis:3.0.6").withExposedPorts(6379);
+    public static final RedisStackContainer redis
+            = new RedisStackContainer("redis:latest").withExposedPorts(6379);
 
     static ClientAndServer mockServer;
 
     @DynamicPropertySource
     static void setupCassandraConnectionProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.cassandra.keyspace-name", "shorturldb"::toString);
-        registry.add("spring.data.cassandra.contact-points", cassandra::getContainerIpAddress);
-        registry.add("spring.data.cassandra.port", String.valueOf(cassandra.getMappedPort(9042))::toString);
-        registry.add("spring.data.cassandra.local-datacenter", "datacenter1"::toString);
-        registry.add("spring.data.cassandra.schema-action", "create_if_not_exists"::toString);
+        registry.add("spring.cassandra.keyspace-name", "shorturldb"::toString);
+        registry.add("spring.cassandra.contact-points", cassandra::getHost);
+        registry.add("spring.cassandra.port", cassandra::getFirstMappedPort);
+        registry.add("spring.cassandra.local-datacenter", cassandra::getLocalDatacenter);
+        registry.add("spring.cassandra.schema-action", "create_if_not_exists"::toString);
 
         createKeyspace(cassandra.getCluster());
 
@@ -57,12 +60,12 @@ public abstract class AbstractIntegrationTest {
         createExpectationForGetToken();
 
         registry.add("spring.redis.database", "0"::toString);
-        registry.add("spring.redis.host", redis::getContainerIpAddress);
-        registry.add("spring.redis.port", String.valueOf(redis.getMappedPort(6379))::toString);
+        registry.add("spring.redis.host", redis::getHost);
+        registry.add("spring.redis.port", redis::getFirstMappedPort);
         registry.add("spring.redis.timeout", "60000"::toString);
 
         redis.start();
-
+        cassandra.start();
     }
 
 
@@ -86,6 +89,7 @@ public abstract class AbstractIntegrationTest {
     public static void stopServer() {
         mockServer.stop();
         redis.start();
+        cassandra.stop();
     }
     static void createKeyspace(Cluster cluster) {
         try(Session session = cluster.connect()) {

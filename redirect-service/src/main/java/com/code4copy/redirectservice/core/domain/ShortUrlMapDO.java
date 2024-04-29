@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Table(value = "short_url_map")
 @Getter
 @Setter
-
 @NoArgsConstructor
 public class ShortUrlMapDO {
     @PrimaryKey
