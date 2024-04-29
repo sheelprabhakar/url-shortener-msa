@@ -37,8 +37,8 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers'
     testImplementation 'org.testcontainers:cassandra'
     testImplementation 'com.redis:testcontainers-redis:2.2.2'
-
     testImplementation 'org.testcontainers:junit-jupiter'
+
     testImplementation 'org.mock-server:mockserver-netty:5.15.0'
     testImplementation 'org.mock-server:mockserver-client-java:5.15.0'
 
