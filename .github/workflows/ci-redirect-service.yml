@@ -3,7 +3,7 @@ name: Build redirect-service
 on:
   push:
     branches: [ "main","dev" ]
-    paths: ['redirect-service/**']
+    paths: ['redirect-service/**', '.github/**']
   pull_request:
     branches: [ "main" ]
     paths: ['redirect-service/**']
@@ -14,11 +14,12 @@ jobs:
     permissions:
       contents: read
 
-    working-directory: redirect-service
     steps:
     - uses: actions/checkout@v4
       with:
         ref: dev
+        sparse-checkout: 'redirect-service'
+        sparse-checkout-cone-mode: false
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v3
     - name: Setup Gradle exec
