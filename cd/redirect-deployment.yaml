@@ -17,6 +17,13 @@ spec:
         image: sheelprabhakar/redirect-service:latest
         ports:
         - containerPort: 8080
+        env:
+          - name: CASSANDRA_HOST
+            value: cassandra
+          - name: REDIS_HOST
+            value: redis-server.default.svc.cluster.local
+          - name: REDIS_PASSWORD
+            value: blank
 ---
 apiVersion: v1
 kind: Service

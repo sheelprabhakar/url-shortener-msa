@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-server
+  template:
+    metadata:
+      labels:
+        app: redis-server
+        name: redis-server
+    spec:
+      containers:
+        - name: redis-server
+          image: redis
+          args: ["--appendonly", "yes"]
+          ports:
+            - name: redis-server
+              containerPort: 6379
+          volumeMounts:
+            - name: redis-volume
+              mountPath: /redis-data
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+      volumes:
+        - name: redis-volume
+          emptyDir:
+            sizeLimit: 500Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-server
+  labels:
+    app: redis-server
+    role: master
+    tier: backend
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+  selector:
+    app: redis-server
