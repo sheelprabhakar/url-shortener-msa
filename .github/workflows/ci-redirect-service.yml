@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: [self-hosted, linux, x64]
+    environment: dev
     permissions:
       contents: read
 
@@ -31,4 +32,8 @@ jobs:
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag sheelprabhakar/redirect-service:latest
+      working-directory: redirect-service
+
+    - name: Push the Docker image
+      run: docker image push --tag sheelprabhakar/redirect-service:latest
       working-directory: redirect-service
