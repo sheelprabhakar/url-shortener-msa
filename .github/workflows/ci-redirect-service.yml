@@ -27,8 +27,9 @@ jobs:
       run: chmod +x gradlew
       working-directory: redirect-service
     - name: Change env to stage
-      run: sed -i '/dev/c\stage' resources/application.properties
+      run: sed -i '/dev/c\stage' src/main/resources/application.properties
       working-directory: redirect-service
+
     - name: Build with Gradle Wrapper
       run:  ./gradlew build
       working-directory: redirect-service
