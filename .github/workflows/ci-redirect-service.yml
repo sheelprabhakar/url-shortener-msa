@@ -11,14 +11,14 @@ on:
 jobs:
   build:
     runs-on: [self-hosted, linux, x64]
-    environment: dev
+    environment: stage
     permissions:
       contents: read
 
     steps:
     - uses: actions/checkout@v4
       with:
-        ref: stage
+        ref: dev
         sparse-checkout: 'redirect-service'
         sparse-checkout-cone-mode: false
     - name: Setup Gradle
