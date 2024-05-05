@@ -19,7 +19,7 @@ spec:
         - containerPort: 8080
         env:
           - name: CASSANDRA_HOST
-            value: cassandra
+            value: cassandra.default.svc.cluster.local
           - name: REDIS_HOST
             value: redis-server.default.svc.cluster.local
           - name: REDIS_PASSWORD
