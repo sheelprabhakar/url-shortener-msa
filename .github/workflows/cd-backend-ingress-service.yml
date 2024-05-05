@@ -17,7 +17,7 @@ jobs:
       with:
         ref: dev
     - name: Deploy MySQ
-      RUN: | 
+      run: | 
         echo "Deploying MySQL Configmap"
         kubectl deploy -f mysql-configmap.yml
         echo "Deploying MySQL"
