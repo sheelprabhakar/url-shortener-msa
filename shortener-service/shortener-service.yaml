@@ -17,6 +17,17 @@ spec:
         image: sheelprabhakar/shortener-service:latest
         ports:
         - containerPort: 8080
+        env:
+          - name: CASSANDRA_HOST
+            value: cassandra.default.svc.cluster.local
+          - name: REDIS_HOST
+            value: redis-server.default.svc.cluster.local
+          - name: REDIS_PASSWORD
+            value: blank
+          - name: TOKEN-SERVICE
+            value: token-service.default.svc.cluster.local
+          - name: REDIRECT-SERVICE
+            value: localhost # F0r shorten url
 ---
 apiVersion: v1
 kind: Service

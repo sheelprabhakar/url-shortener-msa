@@ -1,12 +1,12 @@
-name: Build redirect-service
+name: Build token-service
 
 on:
   push:
     branches: [ "main","dev" ]
-    paths: ['redirect-service/**', '.github/**']
+    paths: ['token-service/**', '.github/**']
   pull_request:
     branches: [ "main" ]
-    paths: ['redirect-service/**']
+    paths: ['token-service/**']
     
 jobs:
   build:
@@ -19,25 +19,25 @@ jobs:
     - uses: actions/checkout@v4
       with:
         ref: dev
-        sparse-checkout: 'redirect-service'
+        sparse-checkout: 'token-service'
         sparse-checkout-cone-mode: false
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v3
     - name: Setup Gradle exec
       run: chmod +x gradlew
-      working-directory: redirect-service
+      working-directory: token-service
     - name: Change env to stage
       run: sed -i '/spring.profiles.active=dev/c\spring.profiles.active=stage' src/main/resources/application.properties
-      working-directory: redirect-service
+      working-directory: token-service
 
     - name: Build with Gradle Wrapper
       run:  ./gradlew build
-      working-directory: redirect-service
+      working-directory: token-service
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag sheelprabhakar/redirect-service:latest
-      working-directory: redirect-service
+      run: docker build . --file Dockerfile --tag sheelprabhakar/token-service:latest
+      working-directory: token-service
 
     - name: Push the Docker image
-      run: docker image push sheelprabhakar/redirect-service:latest
-      working-directory: redirect-service
+      run: docker image push sheelprabhakar/token-service:latest
+      working-directory: token-service

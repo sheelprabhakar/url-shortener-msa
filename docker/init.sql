@@ -1,2 +1,2 @@
 use mysql;
-UPDATE user SET Host="%" WHERE User='c4c';
+UPDATE user SET Host="%" WHERE User='app_user';
