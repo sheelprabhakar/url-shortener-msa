@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class TokenControllerTest extends AbstractIntegrationTest{
-    private final String BASE_URL="/tokenservice/api/v1/";
+    private final String BASE_URL="/api/v1/";
     @Test
     public void test_get_token_ok() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders

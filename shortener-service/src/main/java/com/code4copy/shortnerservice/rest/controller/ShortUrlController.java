@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/shortener/api/v1/")
+@RequestMapping("/api/v1/")
 public class ShortUrlController {
 
     private final RestAdapterV1 restAdapterV1;
