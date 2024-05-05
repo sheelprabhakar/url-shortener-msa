@@ -27,7 +27,7 @@ spec:
           - name: TOKEN-SERVICE
             value: token-service.default.svc.cluster.local
           - name: REDIRECT-SERVICE
-            value: localhost # F0r shorten url
+            value: kubernetes.docker.internal # F0r shorten url
 ---
 apiVersion: v1
 kind: Service
