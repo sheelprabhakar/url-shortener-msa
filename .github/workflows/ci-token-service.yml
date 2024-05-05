@@ -41,3 +41,7 @@ jobs:
     - name: Push the Docker image
       run: docker image push sheelprabhakar/token-service:latest
       working-directory: token-service
+
+    - name: Deploy token service
+      run: kubectl apply -f token-service.yaml
+      working-directory: token-service

@@ -21,7 +21,7 @@ jobs:
         ref: dev
         sparse-checkout: 'cd'
         sparse-checkout-cone-mode: false
-    - name: Deploy MySQ
+    - name: Deploy Backend services
       run: | 
         echo "Deploying MySQL Configmap"
         kubectl apply -f mysql-configmap.yml
