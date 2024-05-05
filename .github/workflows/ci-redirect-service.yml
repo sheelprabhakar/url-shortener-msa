@@ -4,9 +4,6 @@ on:
   push:
     branches: [ "main","dev" ]
     paths: ['redirect-service/**', '.github/**']
-  pull_request:
-    branches: [ "main" ]
-    paths: ['redirect-service/**']
     
 jobs:
   build:

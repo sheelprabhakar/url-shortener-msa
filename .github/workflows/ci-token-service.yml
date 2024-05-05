@@ -4,9 +4,6 @@ on:
   push:
     branches: [ "main","dev" ]
     paths: ['token-service/**', '.github/**']
-  pull_request:
-    branches: [ "main" ]
-    paths: ['token-service/**']
     
 jobs:
   build:
