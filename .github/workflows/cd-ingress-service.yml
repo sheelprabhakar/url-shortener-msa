@@ -1,4 +1,4 @@
-name: Build redirect-service
+name: Ingress Service
 
 on:
   push:
