@@ -24,11 +24,11 @@ jobs:
     - name: Deploy MySQ
       run: | 
         echo "Deploying MySQL Configmap"
-        kubectl deploy -f mysql-configmap.yml
+        kubectl apply -f mysql-configmap.yml
         echo "Deploying MySQL"
-        kubectl deploy -f mysql.yml
+        kubectl apply -f mysql.yml
         echo "Deploying Cassandra"
-        kubectl deploy -f cassandra.yml
+        kubectl apply -f cassandra.yml
         echo "Deploying redis"
-        kubectl deploy -f redis.yml
+        kubectl apply -f redis.yml
       working-directory: cd/backend
