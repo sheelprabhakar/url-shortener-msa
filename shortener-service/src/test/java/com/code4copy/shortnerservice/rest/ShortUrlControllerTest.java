@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class ShortUrlControllerTest extends  AbstractIntegrationTest{
 
-    private final String BASE_URL="/shortener/api/v1/";
+    private final String BASE_URL="/api/v1/";
 
     @Test
     void givenCassandraContainer_whenSpringContextIsBootstrapped_thenContainerIsRunningWithNoExceptions() {

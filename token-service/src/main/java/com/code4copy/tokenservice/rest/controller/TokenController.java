@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/tokenservice/api/v1/")
+@RequestMapping("/api/v1/")
 public class TokenController {
     private final RestAdapterV1 restAdapterV1;
     @Autowired

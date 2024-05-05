@@ -1,0 +1,31 @@
+name: Ingress Service
+
+on:
+  push:
+    branches: [ "main","dev" ]
+    paths: ['cd/**', '.github/**']
+  pull_request:
+    branches: [ "main" ]
+    paths: ['cd/**']
+    
+jobs:
+  build:
+    runs-on: [self-hosted, linux, x64]
+    environment: stage
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: dev
+        sparse-checkout: 'cd'
+        sparse-checkout-cone-mode: false
+
+    - name: Deploy ingress
+      run: |
+        echo "Deploying Nginx Ingress"
+        kubectl apply -f nginx-ingress-deploy.yaml
+        echo "Deploying Shortener Ingress"
+        kubectl apply -f ingress.yaml
+      working-directory: cd/ingress

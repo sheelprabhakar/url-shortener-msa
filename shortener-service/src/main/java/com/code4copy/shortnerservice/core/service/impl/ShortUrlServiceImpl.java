@@ -62,6 +62,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
 
     @Override
     public String generateShortUrl(String longUrl) throws ShorteningException {
+
         CompletableFuture<Void> completableFuture = null;
         if(this.tokenQueue.size() < 200 && !this.fetchingTokenInProgress){
             completableFuture = CompletableFuture.runAsync(() -> {

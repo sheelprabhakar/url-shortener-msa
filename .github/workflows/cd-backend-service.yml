@@ -1,0 +1,34 @@
+name: Deploy Backend services
+
+on:
+  push:
+    branches: [ "main","dev" ]
+    paths: ['cd/**', '.github/**']
+  pull_request:
+    branches: [ "main" ]
+    paths: ['cd/**']
+    
+jobs:
+  build:
+    runs-on: [self-hosted, linux, x64]
+    environment: stage
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: dev
+        sparse-checkout: 'cd'
+        sparse-checkout-cone-mode: false
+    - name: Deploy Backend services
+      run: | 
+        echo "Deploying MySQL Configmap"
+        kubectl apply -f mysql-configmap.yml
+        echo "Deploying MySQL"
+        kubectl apply -f mysql.yml
+        echo "Deploying Cassandra"
+        kubectl apply -f cassandra.yml
+        echo "Deploying redis"
+        kubectl apply -f redis.yml
+      working-directory: cd/backend
