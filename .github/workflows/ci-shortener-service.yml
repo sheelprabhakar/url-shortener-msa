@@ -41,7 +41,7 @@ jobs:
     - name: Push the Docker image
       run: docker image push sheelprabhakar/shortener-service:latest
       working-directory: shortener-service
-
+      
     - name: Deploy shortener service
       run: kubectl apply -f shortener-service.yaml
       working-directory: shortener-service

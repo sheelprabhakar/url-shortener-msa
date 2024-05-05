@@ -42,6 +42,7 @@ jobs:
       run: docker image push sheelprabhakar/redirect-service:latest
       working-directory: redirect-service
 
+
     - name: Deploy Redirect service
       run:  kubectl apply -f redirect-service.yaml
       working-directory: redirect-service
