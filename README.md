@@ -3,6 +3,8 @@ A sample microsevice based URL shortener service project to showcase how to do m
 repository consist spring based 3 services with basic integration tests, GitHub action based end to end build and 
 k8s deployment pipeline.
 
+MSA architecture and other Details will document shortly, but as a dev you should understand itself. 
+
 **Note: This project is to only showcase MSA for URL shortening service using GHA pipeline on K8S, Window/MAC system using Docker desktop.
 This repo has very minimal functionality.**
 
