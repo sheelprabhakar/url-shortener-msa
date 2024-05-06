@@ -1,3 +1,8 @@
+kubectl apply -f cd/backend/cassandra.yml
+kubectl apply -f cd/backend/mysql-configmap.yml
+kubectl apply -f cd/backend/mysql.yml
+kubectl apply -f cd/backend/redis.yml
+
 kubectl apply -f cd/ingress/nginx-ingress-deploy.yaml
 kubectl apply -f cd/ingress/ingress.yaml
 
