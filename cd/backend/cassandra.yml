@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 1800
       containers:
         - name: cassandra
-          image: gcr.io/google-samples/cassandra:v13
+          image: gcr.io/google-samples/cassandra:v14
           imagePullPolicy: Always
           ports:
             - containerPort: 7000
@@ -32,10 +32,10 @@ spec:
           resources:
             limits:
               cpu: "500m"
-              memory: 1Gi
+              memory: 2Gi
             requests:
               cpu: "500m"
-              memory: 1Gi
+              memory: 2Gi
           securityContext:
             capabilities:
               add:
@@ -77,11 +77,12 @@ spec:
           # the stateful pod volumes.
           volumeMounts:
             - name: cassandra-volume
-              mountPath: /cassandra_data
+              mountPath: /var/lib/cassandra
       volumes:
         - name: cassandra-volume
-          emptyDir:
-            sizeLimit: 500Mi
+          hostPath:
+            path: /run/desktop/mnt/host/c/mnt/wsl/cassandra-volume
+            type: DirectoryOrCreate
 
 ---
 apiVersion: v1
