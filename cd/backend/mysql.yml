@@ -43,7 +43,7 @@ spec:
         - name: mysqldir
           hostPath:
             # Ensure the file directory is created.
-            path: /mnt/f/wsl/mysql
+            path: /run/desktop/mnt/host/c/mnt/wsl/mysql-volume
             type: DirectoryOrCreate
         - name: mysql-config-volume ## volume name
           configMap:
