@@ -1,7 +1,7 @@
 package com.code4copy.shortnerservice.adapter.impl;
 
-import com.code4copy.shortnerservice.adapter.RestAdapterV1;
-import com.code4copy.shortnerservice.core.service.ShortUrlService;
+import com.code4copy.shortnerservice.adapter.api.RestAdapterV1;
+import com.code4copy.shortnerservice.core.service.api.ShortUrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

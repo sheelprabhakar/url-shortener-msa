@@ -1,5 +1,6 @@
 package com.code4copy.shortnerservice.config;
 
+import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +15,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import java.time.Duration;
 
 @Configuration
 @EnableCaching
@@ -59,14 +58,6 @@ public class RedisConfig {
 
     @Bean
     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
-        /*ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-
-        // redis serialize
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-        jackson2JsonRedisSerializer.setObjectMapper(om);*/
-
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         StringRedisTemplate template = new StringRedisTemplate(factory);
         template.setValueSerializer(stringRedisSerializer);
