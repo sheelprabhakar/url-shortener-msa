@@ -1,4 +1,4 @@
-package com.code4copy.tokenservice.rest;
+package com.code4copy.tokenservice.rest.controller;
 
 import com.code4copy.tokenservice.TokenServiceApplication;
 import org.springframework.beans.factory.annotation.Autowired;
