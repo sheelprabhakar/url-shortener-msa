@@ -1,4 +1,4 @@
-package com.code4copy.tokenservice.rest;
+package com.code4copy.tokenservice.rest.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -12,10 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @DirtiesContext
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class TokenControllerTest extends AbstractIntegrationTest{
+class TokenControllerTest extends AbstractIntegrationTest{
     private final String BASE_URL="/api/v1/";
     @Test
-    public void test_get_token_ok() throws Exception {
+    void test_get_token_ok() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get(BASE_URL+"next/")
                         .accept(MediaType.APPLICATION_JSON))

@@ -34,7 +34,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=tokendb
-      - MYSQL_USER=c4c
+      - MYSQL_USER=app_user
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     command: --default-authentication-plugin=mysql_native_password
     ports:
