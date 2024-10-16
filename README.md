@@ -62,3 +62,21 @@ and follow instructions on page to install and setup self Hosted GHA runner.
 checkout to branch named dev
 Fork repository to you github account, Make all changes given in the above "Building and Deploying directly" section.
 Push your code GHA will execute work flow to build, test and deploy code 
+
+## Micro Services
+1. token-service
+2. shortener-service
+3. redirect-service
+
+Generate keypair for token service using below command
+```keytool -genkeypair -alias server -keyalg RSA -keysize 4096 -validity 365 -dname "CN=localhost,OU=localhost,O=Examples,L=,S=CA,C=U" -keypass changeit -keystore server.p12 -storeType PKCS12 -storepass changeit```
+
+```keytool -export -alias server -file server.cer -keystore server.p12 -storepass changeit```
+
+```keytool -genkeypair -alias client -keyalg RSA -keysize 4096 -validity 365 -dname "CN=localhost,OU=localhost,O=Examples,L=,S=CA,C=U" -keypass changeit -keystore client.p12 -storeType PKCS12 -storepass changeit```
+
+```keytool -export -alias client -file client.cer -keystore client.p12 -storepass changeit```
+
+```keytool -import -alias client -file client.cer -keystore server_truststore.p12 -storetype PKCS12 -storepass changeit```
+
+```keytool -import -alias server -file server.cer -keystore client_truststore.p12 -storetype PKCS12 -storepass changeit```

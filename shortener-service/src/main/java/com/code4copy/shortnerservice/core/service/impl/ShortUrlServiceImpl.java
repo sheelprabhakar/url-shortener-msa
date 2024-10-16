@@ -7,6 +7,9 @@ import com.code4copy.shortnerservice.core.service.TokenRange;
 import com.code4copy.shortnerservice.core.service.api.ShortUrlService;
 import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
@@ -121,7 +124,12 @@ public class ShortUrlServiceImpl implements ShortUrlService {
         if (tokenRange == null) {
           throw new ShorteningException("Token range is null");
         }
-        for (long i = tokenRange.getFromNumber(); i <= tokenRange.getToNumber(); ++i) {
+        List<Long> randomList = new ArrayList<>();
+        for (long i =  tokenRange.getFromNumber(); i <= tokenRange.getToNumber(); i++) {
+          randomList.add(i);
+        }
+        Collections.shuffle(randomList);
+        for (long i : randomList){
           this.tokenQueue.add(i);
         }
         return null;
