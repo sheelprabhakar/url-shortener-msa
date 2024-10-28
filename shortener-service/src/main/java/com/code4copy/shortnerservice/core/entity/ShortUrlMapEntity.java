@@ -1,7 +1,6 @@
-package com.code4copy.shortnerservice.core.domain;
+package com.code4copy.shortnerservice.core.entity;
 
-import com.datastax.oss.driver.api.core.type.DataType;
-import lombok.AllArgsConstructor;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,15 +10,12 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import java.time.LocalDate;
-import java.util.Calendar;
-
 @Table(value = "short_url_map")
 @Getter
 @Setter
 
 @NoArgsConstructor
-public class ShortUrlMapDO {
+public class ShortUrlMapEntity {
     @PrimaryKey
     @Column(value = "short_url")
     @Id

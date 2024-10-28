@@ -1,6 +1,6 @@
 package com.code4copy.shortnerservice.rest.controller;
 
-import com.code4copy.shortnerservice.adapter.RestAdapterV1;
+import com.code4copy.shortnerservice.adapter.api.RestAdapterV1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
